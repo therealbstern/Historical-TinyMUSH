@@ -807,9 +807,12 @@ int key;
 {
 	char *got;
 	dbref aowner;
-	int aflags, alen, indent = 0;
+	int aflags, alen;
+#ifndef PUEBLO_SUPPORT
+        int indent;
 
 	indent = (isRoom(loc) && mudconf.indent_desc && atr_get_raw(loc, A_DESC));
+#endif
 
 	if ((key & LK_OBEYTERSE) && Terse(player))
 		did_it(player, loc, A_NULL, NULL, A_ODESC, NULL,

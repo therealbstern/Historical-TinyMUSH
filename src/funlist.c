@@ -475,7 +475,7 @@ int el, flag;
 {
 	int ct, overrun;
 	char *sptr, *iptr, *eptr;
-	char nullb;
+	/* char nullb; */
 
 	/* If passed a null string return an empty string, except that we
 	 * are allowed to append to a null string. 
@@ -494,7 +494,7 @@ int el, flag;
 	 * pointed to by sptr, iptr, and eptr respectively. 
 	 */
 
-	nullb = '\0';
+	/* nullb = '\0'; */
 	if (el == 1) {
 		/* No 'before' portion, just split off element 1 */
 
@@ -609,7 +609,7 @@ FUNCTION(fun_lreplace)
      Delim osep;
      char *origlist, *replist, *poslist;
      char **orig_p, **rep_p, **pos_p;
-     int norig, nrep, npos, i, cpos;
+     int norig /* , nrep */, npos, i, cpos;
 
      /* We're generous with the argument checking, in case the
       * replacement list is blank, and/or the position list is blank.
@@ -646,7 +646,7 @@ FUNCTION(fun_lreplace)
      strcpy(poslist, fargs[2]);
 
      norig = list2arr(&orig_p, LBUF_SIZE / 2, origlist, &isep);
-     nrep = list2arr(&rep_p, LBUF_SIZE / 2, replist, &isep);
+     /* nrep = */ list2arr(&rep_p, LBUF_SIZE / 2, replist, &isep);
      npos = list2arr(&pos_p, LBUF_SIZE / 2, poslist, &SPACE_DELIM);
 
      /* The positions we have aren't necessarily sequential, so we can't
@@ -885,10 +885,7 @@ const void *s1, *s2;
     l = (int *) XCALLOC(n, sizeof(int), "do_asort.poslist"); \
     for (i = 0; i < n; i++) l[i] = p[i].pos;
 
-static int *do_asort(s, n, sort_type, listpos_only)
-char *s[];
-int n, sort_type;
-{
+static int *do_asort(char *s[], int n, int sort_type, int listpos_only) {
 	int i;
 	f_rec *fp = NULL;
 	i_rec *ip = NULL;

@@ -5126,7 +5126,8 @@ code. Apparently IBM isn't going to fix the problem, and we would rather not
 disable optimization (in this module it actually makes a big difference, and
 the pcre module can use all the optimization it can get). */
 
-volatile int dummy;
+/* No one uses OS/2 any more. */
+/* volatile int dummy; */
 
 do
   {
@@ -5178,7 +5179,7 @@ do
       case OP_BRAMINZERO:
       if (!set_start_bits(++tcode, start_bits, caseless, cd))
         return FALSE;
-      dummy = 1;
+      /* dummy = 1; */ /* No one uses OS/2 any more. */
       do tcode += (tcode[1] << 8) + tcode[2]; while (*tcode == OP_ALT);
       tcode += 3;
       break;

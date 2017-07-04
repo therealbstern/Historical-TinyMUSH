@@ -19,6 +19,7 @@
 
 extern void FDECL(do_lock, (dbref, dbref, int, char *, char *));
 typedef int object_flag_type;
+extern void queue_string(DESC *d, char *s);
 
 dbref create_guest(num)
 int num;

@@ -2819,7 +2819,7 @@ FUNCTION(fun_lstack)
     Delim osep;
     dbref it;
     OBJSTACK *sp;
-    char *bp, *bb_p;
+    char /* *bp, */ *bb_p;
     int over = 0;
 
     VaChk_Out(0, 2);
@@ -2830,7 +2830,7 @@ FUNCTION(fun_lstack)
 	stack_object(player, it);
     }
 
-    bp = buff;
+    /* bp = buff; */
     bb_p = *bufc;
     for (sp = stack_get(it); (sp != NULL) && !over; sp = sp->next) {
 	if (*bufc != bb_p) {
@@ -3152,7 +3152,7 @@ FUNCTION(perform_regmatch)
     int erroffset;
     int offsets[PCRE_MAX_OFFSETS];
     int subpatterns; 
-    char tbuf[LBUF_SIZE], *p;
+    char tbuf[LBUF_SIZE] /* , *p */;
 
     case_option = Func_Mask(REG_CASELESS);
 
@@ -3517,7 +3517,7 @@ OBJGRID *ogp;
 FUNCTION(fun_gridmake)
 {
      OBJGRID *ogp;
-     int rows, cols, dimension, r, c, status, data_rows, data_elems, errs;
+     int rows, cols, dimension, r, c, status, data_rows, data_elems /* , errs */;
      char *rbuf;
      char **row_text, **elem_text; 
      Delim csep, rsep;
@@ -3580,7 +3580,7 @@ FUNCTION(fun_gridmake)
 	 return;
      }
 
-     errs = 0;
+     /* errs = 0; */
      for (r = 0; r < data_rows; r++) {
 	 data_elems = list2arr(&elem_text, LBUF_SIZE / 2, row_text[r], &csep);
 	 if (data_elems > cols) {
@@ -3623,6 +3623,8 @@ FUNCTION(fun_gridset)
 	 safe_str("#-1 NO GRID", buff, bufc);
 	 return;
      }
+
+     errs = 0;
 
      /* Handle the common case of just one position and a simple separator,
       * first.
@@ -3717,8 +3719,8 @@ FUNCTION(fun_grid)
 {
      Delim csep, rsep;
      OBJGRID *ogp;
-     char *xlist, *ylist, *bb_p;
-     int n_x, n_y, r, c, i, j, errs;
+     char *xlist, *ylist /* , *bb_p */;
+     int n_x, n_y, r, c, i, j /* , errs */;
      char **x_elems, **y_elems; 
 
      VaChk_Range(0, 4);

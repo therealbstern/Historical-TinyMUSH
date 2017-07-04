@@ -762,7 +762,7 @@ FUNCTION(fun_timefmt)
 
 FUNCTION(fun_etimefmt)
 {
-     char *p, *mark, *tp;
+     char *p, *mark /* , *tp */;
      int raw_secs;
      int secs, mins, hours, days;
      int csecs, cmins, chours, cdays;
@@ -1392,7 +1392,7 @@ FUNCTION(fun_set)
 {
 	dbref thing, thing2, aowner;
 	char *p, *buff2;
-	int atr, atr2, aflags, alen, clear, flagvalue, could_hear;
+	int atr, atr2, aflags, alen, clear, flagvalue /* , could_hear */;
 	ATTR *attr, *attr2;
 
 	/* obj/attr form? */
@@ -1444,7 +1444,7 @@ FUNCTION(fun_set)
 				aflags &= ~flagvalue;
 			else
 				aflags |= flagvalue;
-			could_hear = Hearer(thing);
+			/* could_hear = */ Hearer(thing);
 			atr_set_flags(thing, atr, aflags);
 
 			return;

@@ -108,7 +108,7 @@ HASHKEY key;
 HASHTAB *htab;
 {
 	int htype, hval, numchecks;
-	HASHENT *hptr, *prev;
+	HASHENT *hptr /* , *prev */;
 
 	numchecks = 0;
 	htab->scans++;
@@ -118,7 +118,7 @@ HASHTAB *htab;
 	} else {
 		hval = (key.i & htab->mask);
 	}
-	for (prev = hptr = htab->entry[hval]; hptr != NULL; hptr = hptr->next) {
+	for (/* prev = */ hptr = htab->entry[hval]; hptr != NULL; hptr = hptr->next) {
 		numchecks++;
 		if ((htype == HT_STR && strcmp(key.s, hptr->target.s) == 0) ||
 		    (htype == HT_NUM && key.i == hptr->target.i)) {
@@ -129,7 +129,7 @@ HASHTAB *htab;
 			
 			return hptr->data;
 		}
-		prev = hptr;
+		/* prev = hptr; */
 	}
 	if (numchecks > htab->max_scan)
 		htab->max_scan = numchecks;
@@ -147,7 +147,7 @@ HASHKEY key;
 HASHTAB *htab;
 {
 	int htype, hval, numchecks;
-	HASHENT *hptr, *prev;
+	HASHENT *hptr /* , *prev */;
 
 	numchecks = 0;
 	htab->scans++;
@@ -157,7 +157,7 @@ HASHTAB *htab;
 	} else {
 		hval = (key.i & htab->mask);
 	}
-	for (prev = hptr = htab->entry[hval]; hptr != NULL; hptr = hptr->next) {
+	for (/* prev = */ hptr = htab->entry[hval]; hptr != NULL; hptr = hptr->next) {
 		numchecks++;
 		if ((htype == HT_STR && strcmp(key.s, hptr->target.s) == 0) ||
 		    (htype == HT_NUM && key.i == hptr->target.i)) {
@@ -168,7 +168,7 @@ HASHTAB *htab;
 			
 			return hptr->flags;
 		}
-		prev = hptr;
+		/* prev = hptr; */
 	}
 	if (numchecks > htab->max_scan)
 		htab->max_scan = numchecks;

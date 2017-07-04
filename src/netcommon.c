@@ -34,6 +34,8 @@ extern char * FDECL(make_guest, (DESC *));
 extern const char *conn_reasons[];
 extern const char *conn_messages[];
 extern int ansi_nchartab[];
+void queue_string(DESC *d, char *s);
+char *remap_colors(char *s, int *cmap);
 
 /* ---------------------------------------------------------------------------
  * timeval_sub: return difference between two times as a timeval
@@ -356,10 +358,7 @@ int n;
 	} while (n > 0);
 }
 
-INLINE void queue_string(d, s)
-DESC *d;
-const char *s;
-{
+void queue_string(DESC *d, char *s) {
 	char *new;
 
 	if (s) {
@@ -379,10 +378,7 @@ const char *s;
 	}
 }
 
-INLINE void queue_rawstring(d, s)
-DESC *d;
-const char *s;
-{
+void queue_rawstring(DESC *d, const char *s) {
     if (s)
 	queue_write(d, s, strlen(s));
 }

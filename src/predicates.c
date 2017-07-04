@@ -35,7 +35,7 @@ extern int FDECL(get_gender, (dbref));
 static int FDECL(type_quota, (int));
 static int FDECL(pay_quota, (dbref, int, int));
 
-extern INLINE void FDECL(queue_rawstring, (DESC *, const char *));
+extern void FDECL(queue_rawstring, (DESC *, const char *));
 
 #ifdef HAVE_VSNPRINTF
 static char tprintf_buff[LBUF_SIZE];

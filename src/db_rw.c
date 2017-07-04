@@ -20,6 +20,8 @@
 #include "powers.h"	/* required by code */
 
 extern void FDECL(db_grow, (dbref));
+extern dbref getref(FILE *f);
+extern long getlong(FILE *f);
 
 extern struct object *db;
 
@@ -663,9 +665,9 @@ int *db_format, *db_version, *db_flags;
 	int header_gotten, size_gotten, nextattr_gotten;
 	int read_attribs, read_name, read_zone, read_link, read_key, read_parent;
 	int read_extflags, read_3flags, read_money, read_timestamps, read_createtime, read_new_strings;
-	int read_powers, read_powers_player, read_powers_any;
+	int read_powers /* , read_powers_player, read_powers_any */;
 	int has_typed_quotas, has_visual_attrs;
-	int deduce_version, deduce_name, deduce_zone, deduce_timestamps;
+	int deduce_version, deduce_name, deduce_zone /* , deduce_timestamps */;
 	int aflags, f1, f2, f3;
 	BOOLEXP *tempbool;
 	time_t tmptime;
@@ -694,12 +696,12 @@ int *db_format, *db_version, *db_flags;
 	read_createtime = 0;
 	read_new_strings = 0;
 	read_powers = 0;
-	read_powers_player = 0;
-	read_powers_any = 0;
+	/* read_powers_player = 0;
+	read_powers_any = 0 */;
 	deduce_version = 1;
 	deduce_zone = 1;
 	deduce_name = 1;
-	deduce_timestamps = 1;
+	/* deduce_timestamps = 1; */
 	fprintf(mainlog_fp, "Reading ");
 	db_free();
 	for (i = 0;; i++) {
@@ -1267,7 +1269,7 @@ int format, version;
 	dbref i;
 	int flags;
 	VATTR *vp;
-	int n, end, ca, n_oldtotal, n_oldtop, n_deleted, n_renumbered;
+	int n, end, ca, n_oldtotal /* , n_oldtop */, n_deleted, n_renumbered;
 	int n_objt, n_atrt, anxt, dbclean;
 	int *old_attrs_table;
 	char *as;
@@ -1299,7 +1301,7 @@ int format, version;
 					       sizeof(int),
 					       "flatfile.old_attrs_table");
 	    n_oldtotal = mudstate.attr_next;
-	    n_oldtop = anum_alc_top;
+	    /* n_oldtop = anum_alc_top; */
 	    n_deleted = n_renumbered = n_objt = n_atrt = 0;
 
 	    /* Non-user defined attributes are always considered used. */

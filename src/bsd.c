@@ -42,6 +42,8 @@ DESC *FDECL(new_connection, (int));
 int FDECL(process_output, (DESC *));
 int FDECL(process_input, (DESC *));
 
+extern void queue_string(DESC *d, char *s);
+
 /* Some systems are lame, and inet_addr() returns -1 on failure, despite
  * the fact that it returns an unsigned long.
  */
@@ -301,7 +303,7 @@ void shovechars(port)
 int port;
 {
 	fd_set input_set, output_set;
-	struct timeval last_slice, current_time, next_slice, timeout, slice_timeout;
+	struct timeval last_slice, current_time /* , next_slice */, timeout /* , slice_timeout */;
 	int found, check;
 	DESC *d, *dnext, *newd;
 	int avail_descriptors, maxfds;
@@ -368,23 +370,19 @@ int port;
 
 		timeout.tv_sec = que_next();
 		timeout.tv_usec = 0;
-		next_slice = msec_add(last_slice, mudconf.timeslice);
-		slice_timeout = timeval_sub(next_slice, current_time);
+		/* next_slice = msec_add(last_slice, mudconf.timeslice);
+		slice_timeout = timeval_sub(next_slice, current_time); */
 
 		FD_ZERO(&input_set);
 		FD_ZERO(&output_set);
 
-		/*
-		 * Listen for new connections if there are free descriptors 
-		 */
+		/* Listen for new connections if there are free descriptors. */
 
 		if (ndescriptors < avail_descriptors) {
 			FD_SET(sock, &input_set);
 		}
-		/*
-		 * Listen for replies from the slave socket 
-		 */
 
+		/* Listen for replies from the slave socket */
 		if (slave_socket != -1) {
 			FD_SET(slave_socket, &input_set);
 		}
@@ -575,7 +573,8 @@ int sock;
 	char *buff, *cmdsave;
 	DESC *d;
 	struct sockaddr_in addr;
-	int addr_len, len;
+	socklen_t addr_len;
+        int len;
 	char *buf;
 
 	cmdsave = mudstate.debug_cmd;

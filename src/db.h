@@ -302,8 +302,6 @@ extern FILE *	FDECL(tf_popen, (char *, int));
 #define putref(pr__f,pr__ref)	fprintf(pr__f, "%d\n", (int)pr__ref)
 #define putlong(pr__f,pr__i)	fprintf(pr__f, "%ld\n", (long)pr__i)
 
-extern INLINE dbref	FDECL(getref, (FILE *));
-extern INLINE long	FDECL(getlong, (FILE *));
 extern BOOLEXP *FDECL(dup_bool, (BOOLEXP *));
 extern void	FDECL(free_boolexp, (BOOLEXP *));
 extern dbref	FDECL(parse_dbref, (const char *));

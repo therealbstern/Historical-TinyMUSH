@@ -1538,7 +1538,7 @@ int key;
 static void NDECL(process_preload)
 {
 	dbref thing, parent, aowner;
-	int aflags, alen, lev, i;
+	int aflags, alen, lev /* , i */;
 	char *tstr;
 	char tbuf[SBUF_SIZE];
 	FWDLIST *fp;
@@ -1547,7 +1547,7 @@ static void NDECL(process_preload)
 	fp = (FWDLIST *) XMALLOC(sizeof(FWDLIST), "process_preload.fwdlist");
 	pp = (PROPDIR *) XMALLOC(sizeof(PROPDIR), "process_preload.propdir");
 	tstr = alloc_lbuf("process_preload.string");
-	i = 0;
+	/* i = 0; */
 	DO_WHOLE_DB(thing) {
 
 		/* Ignore GOING objects */

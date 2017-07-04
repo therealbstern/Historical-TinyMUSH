@@ -116,7 +116,6 @@ extern int FDECL(countwords, (char *, const Delim *));
 extern int FDECL(list2arr, (char ***, int, char *, const Delim *));
 extern void FDECL(arr2list, (char **, int, char *, char **, const Delim *));
 extern int FDECL(list2ansi, (int *, int *, int, char *, const Delim *));
-extern INLINE void FDECL(do_reverse, (char *, char *));
 extern int FDECL(fn_range_check, (const char *, int, int, int, char *, char **));
 extern int FDECL(delim_check, ( char *, char **, dbref, dbref, dbref, char **, int, char **, int, int, Delim *, int ));
 

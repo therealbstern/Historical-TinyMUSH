@@ -1,14 +1,9 @@
 /* comsys.c - module implementing DarkZone-style channel system */
-/* $Id$ */
 
 #include "../../api.h"
 
 extern BOOLEXP *FDECL(getboolexp1, (FILE *));
 extern void FDECL(putboolexp, (FILE *, BOOLEXP *));
-
-/* --------------------------------------------------------------------------
- * Constants.
- */
 
 #define NO_CHAN_MSG "That is not a valid channel name."
 
@@ -42,10 +37,6 @@ extern void FDECL(putboolexp, (FILE *, BOOLEXP *));
 #define MAX_CHAN_DESC_LEN	256
 #define MAX_CHAN_HEAD_LEN	64
 
-/* --------------------------------------------------------------------------
- * Configuration and hash tables.
- */
-
 struct mod_comsys_confstorage {
 	char	*public_channel;	/* Name of public channel */
 	char	*guests_channel;	/* Name of guests channel */
@@ -72,10 +63,6 @@ MODHASHES mod_comsys_hashtable[] = {
 MODNHASHES mod_comsys_nhashtable[] = {
 { "Channel lists",	&mod_comsys_comlist_htab,	100,	16},
 { NULL,			NULL,				0,	0}};
-
-/* --------------------------------------------------------------------------
- * Structure definitions.
- */
 
 typedef struct com_player CHANWHO;
 struct com_player {
@@ -116,10 +103,6 @@ struct com_list {
     COMALIAS *alias_ptr;
     COMLIST *next;
 };
-
-/* --------------------------------------------------------------------------
- * Macros.
- */
 
 #define check_owned_channel(p,c) \
 if (!Comm_All((p)) && ((p) != (c)->owner)) { \
@@ -165,9 +148,7 @@ if ((a)->title) \
 XFREE((a), "clear_chan_alias.alias"); \
 hashdelete((n), &mod_comsys_calias_htab)
 
-/* --------------------------------------------------------------------------
- * Basic channel utilities.
- */
+extern dbref getref(FILE *f);
 
 INLINE static int is_onchannel(player, chp)
     dbref player;

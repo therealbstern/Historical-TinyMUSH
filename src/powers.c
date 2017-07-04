@@ -374,14 +374,14 @@ dbref player, target;
 {
 	char *buff, *bp;
 	POWERENT *fp;
-	int otype;
+	/* int otype; */
 	POWER fv;
 
 	/*
 	 * Allocate the return buffer 
 	 */
 
-	otype = Typeof(target);
+	/* otype = Typeof(target); */
 	bp = buff = alloc_mbuf("power_description");
 
 	/*

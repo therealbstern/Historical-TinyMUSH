@@ -124,7 +124,7 @@ int eval;
 {
 	FILE *fp;
 	char *p, *line, *result, *str, *bp;
-	int entry_offset, entry_length;
+	int entry_offset /* , entry_length */;
 	struct help_entry *htab_entry;
 	char matched;
 	char *topic_list, *buffp;
@@ -137,7 +137,7 @@ int eval;
 	htab_entry = (struct help_entry *)hashfind(topic, htab);
 	if (htab_entry) {
 		entry_offset = htab_entry->pos;
-		entry_length = htab_entry->len;
+		/* entry_length = htab_entry->len; */
 	} else if (strpbrk(topic, "*?\\")) {
 		matched = 0;
 		for (result = hash_firstkey(htab); result != NULL;
@@ -226,7 +226,7 @@ void help_helper(player, hf_num, eval, topic, buff, bufc)
     char tname[LBUF_SIZE];
     char *p, *q, *line, *result, *str, *bp;
     struct help_entry *htab_entry;
-    int entry_offset, entry_length, count;
+    int entry_offset /* , entry_length */, count;
     FILE *fp;
 
     if (hf_num >= mudstate.helpfiles) {
@@ -251,7 +251,7 @@ void help_helper(player, hf_num, eval, topic, buff, bufc)
 	return;
     }
     entry_offset = htab_entry->pos;
-    entry_length = htab_entry->len;
+    /* entry_length = htab_entry->len; */
 
     sprintf(tbuf, "%s.txt", mudstate.hfiletab[hf_num]);
     if ((fp = tf_fopen(tbuf, O_RDONLY)) == NULL) {

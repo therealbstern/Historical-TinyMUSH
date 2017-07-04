@@ -112,7 +112,7 @@ FUNCTION(perform_iter)
     char *ep, *savep, *dp, *result;
     int is_true, cur_lev, elen;
     char tmpbuf[1] = "";
-    char tmpbuf2[1] = "";
+    /* char tmpbuf2[1] = ""; */
 
     /* Enforce maximum nesting level. */
 

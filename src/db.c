@@ -619,7 +619,7 @@ FWDLIST *fwdlist_get(thing)
 dbref thing;
 {
 	dbref aowner;
-	int aflags, alen, errors;
+	int aflags, alen /* , errors */;
 	char *tp;
 	static FWDLIST *fp = NULL;
 
@@ -631,7 +631,7 @@ dbref thing;
 	    fp->data = NULL;
 	}
 	tp = atr_get(thing, A_FORWARDLIST, &aowner, &aflags, &alen);
-	errors = fwdlist_load(fp, GOD, tp);
+	/* errors = */ fwdlist_load(fp, GOD, tp);
 	free_lbuf(tp);
 	return fp;
 }
@@ -831,7 +831,7 @@ PROPDIR *propdir_get(thing)
 dbref thing;
 {
 	dbref aowner;
-	int aflags, alen, errors;
+	int aflags, alen /* , errors */;
 	char *tp;
 	static PROPDIR *fp = NULL;
 
@@ -843,7 +843,7 @@ dbref thing;
 	    fp->data = NULL;
 	}
 	tp = atr_get(thing, A_PROPDIR, &aowner, &aflags, &alen);
-	errors = propdir_load(fp, GOD, tp);
+	/* errors = */ propdir_load(fp, GOD, tp);
 	free_lbuf(tp);
 	return fp;
 }
@@ -2774,17 +2774,13 @@ int new_strings;
 	}
 }
 
-INLINE dbref getref(f)
-FILE *f;
-{
+dbref getref(FILE *f) {
 	static char buf[SBUF_SIZE];
 	fgets(buf, sizeof(buf), f);
 	return (atoi(buf));
 }
 
-INLINE long getlong(f)
-FILE *f;
-{
+long getlong(FILE *f) {
 	static char buf[SBUF_SIZE];
 	fgets(buf, sizeof(buf), f);
 	return (atol(buf));

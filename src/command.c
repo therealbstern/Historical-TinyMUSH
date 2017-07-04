@@ -41,6 +41,7 @@ extern int FDECL(list_check, (dbref, dbref, char, char *, char *, int, int *));
 extern void FDECL(do_enter_internal, (dbref, dbref, int));
 extern int FDECL(regexp_match, (char *, char *, int, char **, int)); 
 extern void FDECL(register_prefix_cmds, (const char *));
+extern void safe_copy_str(const char *src, char *buff, char **bufp, int max);
 
 #define CACHING "attribute"
 
@@ -74,13 +75,13 @@ extern void FDECL(register_prefix_cmds, (const char *));
 
 #define CALL_PRE_HOOK(x,a,na) \
 if (((x)->pre_hook != NULL) && !((x)->callseq & CS_ADDED)) { \
-    process_hook((x)->pre_hook, (x)->callseq & CS_PRESERVE|CS_PRIVATE, \
+    process_hook((x)->pre_hook, (x)->callseq & (CS_PRESERVE|CS_PRIVATE), \
                  player, cause, (a), (na)); \
 }
 
 #define CALL_POST_HOOK(x,a,na) \
 if (((x)->post_hook != NULL) && !((x)->callseq & CS_ADDED)) { \
-    process_hook((x)->post_hook, (x)->callseq & CS_PRESERVE|CS_PRIVATE, \
+    process_hook((x)->post_hook, (x)->callseq & (CS_PRESERVE|CS_PRIVATE), \
                  player, cause, (a), (na)); \
 }
 
@@ -403,7 +404,6 @@ int interactive, ncargs;
 	char *buf1, *buf2, tchar, *bp, *str, *buff, *s, *j, *new;
 	char *args[MAX_ARG], *aargs[NUM_ENV_VARS];
 	int nargs, i, interp, key, xkey, aflags, alen;
-	int hasswitch = 0;
 	int cmd_matches = 0;
 	dbref aowner;
 	ADDENT *add;
@@ -476,7 +476,6 @@ int interactive, ncargs;
 			}
 			key |= xkey;
 			switchp = buf1;
-			hasswitch = 1;
 		} while (buf1);
 	} else if (switchp && !(cmdp->callseq & CS_ADDED)) {
 		notify(player,
@@ -2353,13 +2352,14 @@ dbref player;
 
 #if defined(HAVE_GETRUSAGE) && defined(STRUCT_RUSAGE_COMPLETE)
 	struct rusage usage;
-	int ixrss, idrss, isrss, curr, last, dur;
+	/* int ixrss, idrss, isrss, curr, last, dur; */
 
 	getrusage(RUSAGE_SELF, &usage);
 	/*
 	 * Calculate memory use from the aggregate totals 
 	 */
 
+        /*
 	curr = mudstate.mstat_curr;
 	last = 1 - curr;
 	dur = mudstate.mstat_secs[curr] - mudstate.mstat_secs[last];
@@ -2375,6 +2375,7 @@ dbref player;
 		idrss = 0;
 		isrss = 0;
 	}
+        */
 #endif
 
 #ifdef HAVE_GETDTABLESIZE
@@ -2435,23 +2436,22 @@ extern NAME *names, *purenames;
 extern POOL pools[NUM_POOLS];
 extern int anum_alc_top;
 
-void list_memory(player)
-{
+void list_memory(int player) {
 	double total = 0, each = 0, each2 = 0;
 	int i, j;
 	CMDENT *cmd;
 	ADDENT *add;
 	NAMETAB *name;
-	VATTR *vattr;
+	/* VATTR *vattr; */
 	ATTR *attr;
-	FUN *func;
+	/* FUN *func; */
 	UFUN *ufunc;
 	Cache *cp;
 	Chain *sp;
 	HASHENT *htab;
-	struct help_entry *hlp;
+	/* struct help_entry *hlp;
 	FLAGENT *flag;
-	POWERENT *power;
+	POWERENT *power; */
 	OBJSTACK *stack;
 	OBJGRID *grid;
 	VARENT *xvar;
@@ -2612,7 +2612,7 @@ void list_memory(player)
 			each += sizeof(HASHENT);
 			each += strlen(htab->target.s) + 1;
 			if (!(htab->flags & HASH_ALIAS)) {
-				func = (FUN *)htab->data;
+				/* func = (FUN *)htab->data; */
 				each += sizeof(FUN);
 			}
 			
@@ -2659,7 +2659,7 @@ void list_memory(player)
 			each += sizeof(HASHENT);
 			each += strlen(htab->target.s) + 1;
 			if (!(htab->flags & HASH_ALIAS)) {
-				flag = (FLAGENT *)htab->data;
+				/* flag = (FLAGENT *)htab->data; */
 				each += sizeof(FLAGENT);
 			}
 					
@@ -2682,7 +2682,7 @@ void list_memory(player)
 			each += sizeof(HASHENT);
 			each += strlen(htab->target.s) + 1;
 			if (!(htab->flags & HASH_ALIAS)) {
-				power = (POWERENT *)htab->data;
+				/* power = (POWERENT *)htab->data; */
 				each += sizeof(POWERENT);
 			}
 					
@@ -2708,7 +2708,7 @@ void list_memory(player)
 				each += strlen(htab->target.s) + 1;
 				if (!(htab->flags & HASH_ALIAS)) {
 					each += sizeof(struct help_entry);
-					hlp = (struct help_entry *)htab->data;
+					/* hlp = (struct help_entry *)htab->data; */
 				}
 				htab = htab->next;
 			}

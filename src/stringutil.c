@@ -468,10 +468,7 @@ char **p;
 
 /* remap_colors -- allow a change of the color sequences */
 
-char *remap_colors(s, cmap)
-char *s;
-int *cmap;
-{
+char *remap_colors(char *s, int *cmap) {
      static char new[LBUF_SIZE];
      char *bp;
      int n;
@@ -971,12 +968,7 @@ int min;
  * watching for overflows.
  */
 
-INLINE void
-safe_copy_str(src, buff, bufp, max)
-    const char *src;
-    char *buff, **bufp;
-    int max;
-{
+void safe_copy_str(const char *src, char *buff, char **bufp, int max) {
     char *tp, *maxtp, *longtp;
     int n, len;
 
@@ -1130,11 +1122,7 @@ INLINE void safe_known_str(src, known, buff, bufp)
 }
 
 
-INLINE int 
-safe_chr_real_fn(src, buff, bufp, max)
-    char src, *buff, **bufp;
-    int max;
-{
+int safe_chr_real_fn(char src, char *buff, char **bufp, int max) {
     char *tp;
     int retval = 0;
 
