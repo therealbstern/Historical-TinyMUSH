@@ -1929,7 +1929,7 @@ char *name, *qual;
 
 	buff = alloc_mbuf("do_decomp.attr_name");
 	for (ca = (wild_decomp ? olist_first() : atr_head(thing, &as));
-	      (wild_decomp) ? (ca != NOTHING) : (ca != (int) NULL);
+	      (wild_decomp) ? (ca != NOTHING) : !!ca;
 	      ca = (wild_decomp ? olist_next() : atr_next(&as))) {
 		if ((ca == A_NAME) || (ca == A_LOCK))
 			continue;
