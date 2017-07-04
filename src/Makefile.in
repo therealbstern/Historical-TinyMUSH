@@ -262,9 +262,6 @@ distclean: realclean
 	@./shtool echo -e "Cleaning %B@PACKAGE_NAME@%b."
 	@echo
 	curdir=`pwd`
-	@./shtool echo -e "Cleaning %BTinyGDBM-1.8.3%b."
-	-cd gdbm-1.8.3 && $(MAKE) distclean
-	cd $$curdir
 	-rm -f libtool config.log config.cache config.status autoconf.h
 	-rm -f depend build install install-modules
 	-rm -f .depend buildnum.data

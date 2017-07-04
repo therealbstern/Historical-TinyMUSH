@@ -805,32 +805,8 @@ case "$with_sql" in
       AC_MSG_ERROR(unable to build with sqlite3), ) ;;
 esac
 
-# How to build GDBM if needed.
-AC_DEFUN([BUILD_GDBM], [
-
-  PRETTY_PRINT([configure], [TinyGDBM library not found, building it.], 1)
-  
-  cd gdbm-1.8.3/
-  make distclean
-  ./configure --disable-shared --enable-static
-  make
-  cd ..
-
-  PRETTY_PRINT([configure], [TinyGDBM build done], 1)
-
-  LIBS="-L./gdbm-1.8.3/.libs -ltinygdbm $LIBS"
-  LIBSINC="-I./gdbm-1.8.3"
-
-  ])
-
 
 SAVELDFLAGS="$LDFLAGS"
-
-  LDFLAGS="-L./gdbm-1.8.3/.libs $SAVELDFLAGS"
-  AC_CHECK_LIB(tinygdbm, main,
-  LIBS="-L./gdbm-1.8.3/.libs -ltinygdbm $LIBS",
-  LIBSINC="-I./gdbm-1.8.3"
-  [BUILD_GDBM], )
 
 AC_SUBST(LIBSINC)
 
