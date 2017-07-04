@@ -236,9 +236,8 @@ int set_register(funcname, name, data)
 	}
     }
 
-    /* Oops. We're out of room in our existing array. Go allocate
-     * more space, unless we're at our limit.
-     */
+    /* Oops. We're out of room in our existing array. Go allocate more space,
+    unless we're at our limit. */
 
     regnum = mudstate.rdata->xr_alloc;
     a_size = regnum + NUM_ENV_VARS;
@@ -249,21 +248,23 @@ int set_register(funcname, name, data)
     }
 
     tmp_regs = (char **) XREALLOC(mudstate.rdata->x_names,
-				  a_size * sizeof(char *), funcname);
+        a_size * sizeof(char *), funcname);
     mudstate.rdata->x_names = tmp_regs;
     tmp_regs = (char **) XREALLOC(mudstate.rdata->x_regs,
-				  a_size * sizeof(char *), funcname);
+        a_size * sizeof(char *), funcname);
     mudstate.rdata->x_regs = tmp_regs;
     tmp_lens = (int *) XREALLOC(mudstate.rdata->x_lens,
-				a_size * sizeof(int), funcname);
+        a_size * sizeof(int), funcname);
     mudstate.rdata->x_lens = tmp_lens;
 
-    memset(&mudstate.rdata->x_names[mudstate.rdata->xr_alloc], (int) NULL,
-	   (a_size - mudstate.rdata->xr_alloc) * sizeof(char *));
-    memset(&mudstate.rdata->x_regs[mudstate.rdata->xr_alloc], (int) NULL,
-	   (a_size - mudstate.rdata->xr_alloc) * sizeof(char *));
+    memset(&mudstate.rdata->x_names[mudstate.rdata->xr_alloc],
+        /* (int) NULL, */ 0,
+        (a_size - mudstate.rdata->xr_alloc) * sizeof(char *));
+    memset(&mudstate.rdata->x_regs[mudstate.rdata->xr_alloc],
+        /* (int) NULL, */ 0,
+        (a_size - mudstate.rdata->xr_alloc) * sizeof(char *));
     memset(&mudstate.rdata->x_lens[mudstate.rdata->xr_alloc], 0,
-	   (a_size - mudstate.rdata->xr_alloc) * sizeof(int));
+        (a_size - mudstate.rdata->xr_alloc) * sizeof(int));
 
     mudstate.rdata->xr_alloc = a_size;
 
@@ -278,20 +279,16 @@ int set_register(funcname, name, data)
     return len;
 }
 
-static char *get_register(g, r)
-GDATA *g;
-char *r;
-{
-     /* Given a pointer to a register data structure, and the name of a
-      * register, return a pointer to the string value of that register.
-      * This may modify r, turning it lowercase.
-      */
-
+/* Given a pointer to a register data structure, and the name of a register,
+return a pointer to the string value of that register.  This may modify r,
+turning it lowercase. */
+static char *get_register(GDATA *g, char *r) {
      int regnum;
      char *p;
 
-     if (!g || !r || !*r)
+     if (!g || !r || !*r) {
 	 return NULL;
+     }
 
      if (r[1] == '\0') {
 	 regnum = qidx_chartab[(unsigned char) r[0]];
