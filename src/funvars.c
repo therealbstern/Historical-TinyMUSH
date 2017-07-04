@@ -102,9 +102,8 @@ int set_register(funcname, name, data)
 	    return 0;
 	}
 
-	/* We're actually setting a register. Take care of allocating
-	 * space first.
-	 */
+        /* We're actually setting a register.  Take care of allocating space
+        first.  */
 
 	if (!mudstate.rdata) {
 	    Init_RegData(funcname, mudstate.rdata);
@@ -121,7 +120,7 @@ int set_register(funcname, name, data)
 				a_size * sizeof(char *), "q_regs");
 	    tmp_lens = XREALLOC(mudstate.rdata->q_lens,
 				a_size * sizeof(int), "q_lens");
-	    memset(&tmp_regs[mudstate.rdata->q_alloc], (int) NULL,
+	    memset(&tmp_regs[mudstate.rdata->q_alloc], /* (int) NULL */ 0,
 		   (a_size - mudstate.rdata->q_alloc) * sizeof(char *));
 	    memset(&tmp_lens[mudstate.rdata->q_alloc], 0,
 		   (a_size - mudstate.rdata->q_alloc) * sizeof(int));
@@ -142,9 +141,8 @@ int set_register(funcname, name, data)
 	return len;
     }
 
-    /* We have an arbitrarily-named register.
-     * Check for data-clearing first, since that's easier. 
-     */
+    /* We have an arbitrarily-named register.  Check for data-clearing first,
+    since that's easier. */
 
     if (!data || !*data) {
 	if (!mudstate.rdata || !mudstate.rdata->xr_alloc)
